@@ -422,7 +422,9 @@ function EdidCtrl($scope) {
 function scrubEdid(edid)
 {
   var scrubbedEdid;
-
+  var edidData = [];
+  var j = 0;
+  
   // Remove commas, replace with spaces
   scrubbedEdid = edid.replace(/,/g,' ');
   // Remove 0x for hex
@@ -439,6 +441,24 @@ function scrubEdid(edid)
   scrubbedEdid = scrubbedEdid.trim();
   // Convert to string array
   scrubbedEdid = scrubbedEdid.split(" ");
+	console.log(scrubbedEdid.length);
+	// Check the EDID has at least 128 Bytes
+  if (scrubbedEdid.length < 128 )
+  {
+	  console.log("NOT CORRECT EDID");
+	  //Check the array has 1 byte elements
+	  
+	  for(var i=0; i<scrubbedEdid.toString().length; i= i+2)
+	  {
+		edidData[j] = scrubbedEdid.toString().substr(i,2) ;
+		j++;
+	  }
+	  scrubbedEdid = edidData
+  }
+  else
+  {
+	  console.log("CORRECT EDID");
+  }
 
   return scrubbedEdid;
 }
